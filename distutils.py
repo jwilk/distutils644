@@ -40,8 +40,10 @@ sys.modules['distutils'] = distutils
 sys.path[:0] = [sys_path0]
 
 if sys.version_info >= (3, 0) and sys.version_info < (3, 2):
-
-    raise NotImplementedError
+    import warnings
+    class NotImplementedWarning(Warning, NotImplementedError):
+        pass
+    warnings.warn('Python %d.%d is not supported' % sys.version_info[:2], category=NotImplementedWarning, stacklevel=2)
 
 if sys.version_info < (2, 7):
 
