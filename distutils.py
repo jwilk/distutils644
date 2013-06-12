@@ -49,7 +49,7 @@ if sys.version_info < (2, 7):
 
     # Before Python 2.7, distutils just called the tar(1) binary,
     # so the TAR_OPTIONS environment variable can be used.
-    os.putenv('TAR_OPTIONS', '--owner root --group root --mode a+rX')
+    os.putenv('TAR_OPTIONS', '--owner root --group root --mode a+rX --format ustar')
 
 else:
 
@@ -73,6 +73,8 @@ else:
         )
 
     tarfile.TarFile.add = add
+
+    tarfile.TarFile.format = tarfile.USTAR_FORMAT
 
 __all__ = []
 
