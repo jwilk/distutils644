@@ -27,11 +27,8 @@ Monkey-patch distutils to sanitize generated tarballs:
 - tar format (ustar).
 '''
 
-import os
 import sys
 import tarfile
-
-import distutils
 
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
 
