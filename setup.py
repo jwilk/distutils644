@@ -37,7 +37,7 @@ distutils.core.setup(
     name='distutils644',
     version='0.1',
     license='MIT',
-    description='Python: monkey-patch distutils to sanitize ownership, permissions, tar format',
+    description='sanitize ownership, permissions and tar format in distutils-generated tarballs',
     long_description=distutils644.__doc__.strip(),
     classifiers=classifiers,
     url='https://github.com/jwilk/distutils644',
