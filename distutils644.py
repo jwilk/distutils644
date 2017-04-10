@@ -49,7 +49,10 @@ else:
     def root_filter(tarinfo):
         tarinfo.uid = tarinfo.gid = 0
         tarinfo.uname = tarinfo.gname = 'root'
-        tarinfo.mode |= 0o444 | ((tarinfo.mode & 0o100) and 0o111)
+        tarinfo.mode &= 0o700
+        tarinfo.mode |= 0o644
+        if tarinfo.mode & 0o100:
+            tarinfo.mode |= 0o111
         return tarinfo
 
     def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):
