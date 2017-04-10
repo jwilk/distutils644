@@ -42,8 +42,6 @@ if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
 
 else:
 
-    # In Python 2.7, distutils uses the tarfile module. Let's monkey-patch it.
-
     original_add = tarfile.TarFile.add
 
     def root_filter(tarinfo):
