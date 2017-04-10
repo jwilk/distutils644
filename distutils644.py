@@ -58,12 +58,15 @@ else:
         return tarinfo
 
     def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):
+        kwargs = {}
+        if exclude is not None:
+            kwargs.update(exclude=exclude)
         return original_add(self,
             name=name,
             arcname=arcname,
             recursive=recursive,
-            exclude=exclude,
-            filter=root_filter
+            filter=root_filter,
+            **kwargs
         )
 
     tarfile.TarFile.add = add

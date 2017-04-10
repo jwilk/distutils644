@@ -8,9 +8,6 @@ python:
 - "3.5"
 - "3.6"
 - "3.7-dev"
-matrix:
-  allow_failures:
-  - python: "3.7-dev"
 script:
 - python setup.py sdist
 - tar -tvvf dist/distutils644-*.tar.gz | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '; }
