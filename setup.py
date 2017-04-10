@@ -28,6 +28,8 @@ import distutils644
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
     raise RuntimeError('Python 2.7 or 3.2+ is required')
 
+distutils644.install()
+
 classifiers = '''
 Development Status :: 3 - Alpha
 Intended Audience :: Developers

@@ -37,9 +37,10 @@ if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
         pass
     warnings.warn('Python %d.%d is not supported' % sys.version_info[:2], category=NotImplementedWarning, stacklevel=2)
 
-else:
 
-    original_add = tarfile.TarFile.add
+original_add = tarfile.TarFile.add
+
+def install():
 
     def root_filter(tarinfo):
         tarinfo.uid = tarinfo.gid = 0
@@ -66,6 +67,6 @@ else:
 
     tarfile.TarFile.format = tarfile.USTAR_FORMAT
 
-__all__ = []
+__all__ = ['install']
 
 # vim:ts=4 sts=4 sw=4 et
