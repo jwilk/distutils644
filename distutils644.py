@@ -31,12 +31,7 @@ import os
 import sys
 import tarfile
 
-sys_path0 = sys.path.pop(0)
-me = sys.modules['distutils']
-del sys.modules['distutils']
 import distutils
-sys.modules['distutils'] = distutils
-sys.path[:0] = [sys_path0]
 
 if sys.version_info >= (3, 0) and sys.version_info < (3, 2):
     import warnings
