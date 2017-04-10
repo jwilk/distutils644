@@ -20,8 +20,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
+
 import distutils.core
 import distutils644
+
+if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
+    raise RuntimeError('Python 2.7 or 3.2+ is required')
 
 classifiers = '''
 Development Status :: 3 - Alpha

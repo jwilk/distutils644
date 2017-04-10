@@ -33,17 +33,12 @@ import tarfile
 
 import distutils
 
-if sys.version_info >= (3, 0) and sys.version_info < (3, 2):
+if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
+
     import warnings
     class NotImplementedWarning(Warning, NotImplementedError):
         pass
     warnings.warn('Python %d.%d is not supported' % sys.version_info[:2], category=NotImplementedWarning, stacklevel=2)
-
-if sys.version_info < (2, 7):
-
-    # Before Python 2.7, distutils just called the tar(1) binary,
-    # so the TAR_OPTIONS environment variable can be used.
-    os.putenv('TAR_OPTIONS', '--owner root --group root --mode a+rX --format ustar')
 
 else:
 
