@@ -27,13 +27,13 @@ Monkey-patch distutils to sanitize generated tarballs:
 - tar format (ustar).
 '''
 
+import distutils.archive_util
 import sys
 import tarfile
+import types
 
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
     raise ImportError('Python 2.7 or 3.2+ is required')
-
-original_add = tarfile.TarFile.add
 
 def install():
 
@@ -46,21 +46,44 @@ def install():
             tarinfo.mode |= 0o111
         return tarinfo
 
-    def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):
-        kwargs = {}
-        if exclude is not None:
-            kwargs.update(exclude=exclude)
-        return original_add(self,
-            name=name,
-            arcname=arcname,
-            recursive=recursive,
-            filter=root_filter,
-            **kwargs
-        )
+    class TarFile644(tarfile.TarFile):
 
-    tarfile.TarFile.add = add
+        def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):
+            kwargs = {}
+            if exclude is not None:
+                kwargs.update(exclude=exclude)
+            return tarfile.TarFile.add(self,
+                name=name,
+                arcname=arcname,
+                recursive=recursive,
+                filter=root_filter,
+                **kwargs
+            )
 
-    tarfile.TarFile.format = tarfile.USTAR_FORMAT
+    def make_tarball(*args, **kwargs):
+        orig_sys_modules = sys.modules.copy()
+        tarfile_mod = types.ModuleType('tarfile644')
+        tarfile_mod.open = TarFile644.open
+        sys.modules['tarfile'] = tarfile_mod
+        try:
+            return distutils.archive_util.make_tarball(*args, **kwargs)
+        finally:
+            sys.modules.clear()
+            sys.modules.update(orig_sys_modules)
+
+    def patch_format(fmt):
+        if fmt[0] is distutils.archive_util.make_tarball:
+            return (make_tarball,) + fmt[1:]
+        else:
+            return fmt
+
+    archive_formats = distutils.archive_util.ARCHIVE_FORMATS
+    archive_formats = dict(
+        (key, patch_format(value))
+        for key, value
+        in archive_formats.items()
+    )
+    distutils.archive_util.ARCHIVE_FORMATS = archive_formats
 
 __all__ = ['install']
 
