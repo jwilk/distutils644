@@ -31,12 +31,7 @@ import sys
 import tarfile
 
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
-
-    import warnings
-    class NotImplementedWarning(Warning, NotImplementedError):
-        pass
-    warnings.warn('Python %d.%d is not supported' % sys.version_info[:2], category=NotImplementedWarning, stacklevel=2)
-
+    raise ImportError('Python 2.7 or 3.2+ is required')
 
 original_add = tarfile.TarFile.add
 
