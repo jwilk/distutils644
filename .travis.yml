@@ -10,5 +10,6 @@ python:
 script:
 - python setup.py sdist
 - tar -tvvf dist/distutils644-*.tar.gz | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '; }
+- zcat dist/distutils644-*.tar.gz | file - | grep -w 'POSIX tar archive'
 
 # vim:ts=2 sts=2 sw=2 et

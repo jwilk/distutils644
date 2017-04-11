@@ -48,6 +48,8 @@ def install():
 
     class TarFile644(tarfile.TarFile):
 
+        format = tarfile.USTAR_FORMAT
+
         def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):
             kwargs = {}
             if exclude is not None:
