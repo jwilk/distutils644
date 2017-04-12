@@ -20,15 +20,30 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
 import sys
 
 import distutils.core
+from distutils.command.sdist import sdist as distutils_sdist
+
 import distutils644
 
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
     raise RuntimeError('Python 2.7 or 3.2+ is required')
 
 distutils644.install()
+
+class cmd_sdist(distutils_sdist):
+
+    def maybe_move_file(self, base_dir, src, dst):
+        src = os.path.join(base_dir, src)
+        dst = os.path.join(base_dir, dst)
+        if os.path.exists(src):
+            self.move_file(src, dst)
+
+    def make_release_tree(self, base_dir, files):
+        distutils_sdist.make_release_tree(self, base_dir, files)
+        self.maybe_move_file(base_dir, 'LICENSE', 'doc/LICENSE')
 
 classifiers = '''
 Development Status :: 3 - Alpha
@@ -56,7 +71,10 @@ distutils.core.setup(
     url='https://github.com/jwilk/distutils644',
     author='Jakub Wilk',
     author_email='jwilk@jwilk.net',
-    py_modules=['distutils644']
+    py_modules=['distutils644'],
+    cmdclass=dict(
+        sdist=cmd_sdist,
+    ),
 )
 
 # vim:ts=4 sts=4 sw=4 et
