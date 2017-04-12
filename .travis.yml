@@ -9,8 +9,7 @@ python:
 - "3.7-dev"
 before_install:
 - no_pylint=true
-- \[ "$TRAVIS_PYTHON_VERSION" = 2.6 ] ||
-  \[ "$TRAVIS_PYTHON_VERSION" = 3.2 ] ||
+- \[ "$TRAVIS_PYTHON_VERSION" = 3.2 ] ||
   [[ "$TRAVIS_PYTHON_VERSION" =~ dev ]] ||
   no_pylint=false
 install:
