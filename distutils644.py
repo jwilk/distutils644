@@ -22,6 +22,7 @@
 
 '''
 Monkey-patch distutils to sanitize generated tarballs:
+
 - ownership (root:root),
 - permissions (0644 or 0755),
 - tar format (ustar).
