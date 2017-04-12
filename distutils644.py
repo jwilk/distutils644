@@ -51,7 +51,8 @@ def install():
 
         format = tarfile.USTAR_FORMAT
 
-        def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):
+        def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):  # pylint: disable=arguments-differ,redefined-builtin
+            del filter
             kwargs = {}
             if exclude is not None:
                 kwargs.update(exclude=exclude)
