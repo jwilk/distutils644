@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import io
 import os
 import sys
 
@@ -45,6 +46,12 @@ class cmd_sdist(distutils_sdist):
         distutils_sdist.make_release_tree(self, base_dir, files)
         self.maybe_move_file(base_dir, 'LICENSE', 'doc/LICENSE')
 
+def get_version():
+    path = os.path.join('doc/changelog')
+    with io.open(path, encoding='UTF-8') as file:
+        line = file.readline()
+    return line.split()[1].strip('()')
+
 classifiers = '''
 Development Status :: 3 - Alpha
 Intended Audience :: Developers
@@ -63,7 +70,7 @@ Programming Language :: Python :: 3.6
 
 distutils.core.setup(
     name='distutils644',
-    version='0.1',
+    version=get_version(),
     license='MIT',
     description='sanitize ownership, permissions and tar format in distutils-generated tarballs',
     long_description=distutils644.__doc__.strip(),
