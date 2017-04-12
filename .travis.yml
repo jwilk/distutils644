@@ -24,6 +24,7 @@ script:
 - python setup.py sdist
 - tar -tvvf dist/distutils644-*.tar.gz | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '; }
 - zcat dist/distutils644-*.tar.gz | file - | grep -w 'POSIX tar archive'
-- LC_ALL=C python setup.py --version
+- LC_ALL=C python setup.py --version > __version__
+- diff -u __version__ <(python -c 'import distutils644 as d; print(d.__version__)')
 
 # vim:ts=2 sts=2 sw=2 et
