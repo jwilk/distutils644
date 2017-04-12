@@ -16,10 +16,12 @@ install:
 - pip install pydiatra
 - pip install pyflakes
 - pip install pylint
+- pip install docutils
 script:
 - python -m pydiatra *.py
 - python -m pyflakes *.py
 - $no_pylint || private/run-pylint
+- private/check-rst
 - python setup.py sdist
 - tar -tvvf dist/distutils644-*.tar.gz | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '; }
 - zcat dist/distutils644-*.tar.gz | file - | grep -w 'POSIX tar archive'
