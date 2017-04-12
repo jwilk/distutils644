@@ -88,6 +88,8 @@ def install():
     )
     distutils.archive_util.ARCHIVE_FORMATS = archive_formats
 
+__version__ = '0.1'
+
 __all__ = ['install']
 
 # vim:ts=4 sts=4 sw=4 et
