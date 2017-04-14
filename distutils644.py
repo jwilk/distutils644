@@ -77,8 +77,7 @@ def install():
     def patch_format(fmt):
         if fmt[0] is distutils.archive_util.make_tarball:
             return (make_tarball,) + fmt[1:]
-        else:
-            return fmt
+        return fmt
 
     archive_formats = distutils.archive_util.ARCHIVE_FORMATS
     archive_formats = dict(
