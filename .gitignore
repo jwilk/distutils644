@@ -1,4 +1,4 @@
 *.pyc
-MANIFEST
-build
-dist
+/MANIFEST
+/build
+/dist
