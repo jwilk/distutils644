@@ -2,6 +2,6 @@ include *.py
 include .pylintrc
 include LICENSE
 include MANIFEST.in
-exclude README
+exclude README.rst
 include doc/*
 include private/*
