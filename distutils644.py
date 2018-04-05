@@ -25,6 +25,15 @@ Monkey-patch distutils to sanitize generated tarballs:
 - ownership (root:root),
 - permissions (0644 or 0755),
 - tar format (ustar).
+
+To enable the sanitization opportunistically, add this to setup.py:
+
+   try:
+       import distutils644
+   except ImportError:
+       pass
+   else:
+       distutils644.install()
 '''
 
 import distutils.archive_util

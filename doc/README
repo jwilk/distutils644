@@ -11,6 +11,20 @@ to sanitize generated tarballs:
 .. _distutils:
    https://docs.python.org/2/library/distutils.html
 
+Usage
+=====
+
+Add this to ``setup.py``:
+
+.. code:: python
+
+   try:
+       import distutils644
+   except ImportError:
+       pass
+   else:
+       distutils644.install()
+
 Prerequisites
 =============
 
