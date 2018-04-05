@@ -1,8 +1,8 @@
 distutils644 (0.1.1) UNRELEASED; urgency=low
 
-  * 
+  * Document how to opportunistically enable the sanitization.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 14 Apr 2017 11:33:01 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 05 Apr 2018 12:24:20 +0200
 
 distutils644 (0.1) unstable; urgency=low
 
