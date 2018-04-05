@@ -10,6 +10,7 @@ python:
 - "3.6"
 - "3.7-dev"
 before_install:
+- if [[ $TRAVIS_PYTHON_VERSION = 3.2 ]]; then skip_py32=true; fi
 - no_pylint=true
 - \[ "$TRAVIS_PYTHON_VERSION" = 3.2 ] ||
   [[ "$TRAVIS_PYTHON_VERSION" =~ dev ]] ||
@@ -18,12 +19,12 @@ install:
 - pip install pydiatra
 - pip install pyflakes
 - $no_pylint || pip install pylint
-- pip install docutils
+- $skip_py32 pip install docutils pygments
 script:
 - python -m pydiatra *.py
 - python -m pyflakes *.py
 - $no_pylint || private/run-pylint
-- private/check-rst
+- $skip_py32 private/check-rst
 - python setup.py sdist
 - tar -tvvf dist/distutils644-*.tar.gz | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '; }
 - zcat dist/distutils644-*.tar.gz | file - | grep -w 'POSIX tar archive'
