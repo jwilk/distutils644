@@ -1,6 +1,7 @@
 distutils644 (0.2) UNRELEASED; urgency=low
 
   * Normalize order of tar directory entries.
+    https://github.com/jwilk/distutils644/issues/1
   * Document how to opportunistically enable normalization.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Wed, 18 Apr 2018 18:48:13 +0200
