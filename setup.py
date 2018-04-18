@@ -22,7 +22,7 @@
 
 '''
 **distutils644** monkey-patches distutils
-to sanitize generated tarballs:
+to normalize metadata in generated tarballs:
 
 - ownership (root:root),
 - permissions (0644 or 0755),
@@ -82,7 +82,7 @@ distutils.core.setup(
     name='distutils644',
     version=get_version(),
     license='MIT',
-    description='sanitize ownership, permissions and tar format in distutils-generated tarballs',
+    description='normalize ownership, permissions, order of directory entries and tar format in distutils-generated tarballs',
     long_description=__doc__.strip(),
     classifiers=classifiers,
     url='https://github.com/jwilk/distutils644',
