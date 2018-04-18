@@ -105,7 +105,7 @@ def install():
     )
     distutils.archive_util.ARCHIVE_FORMATS = archive_formats
 
-__version__ = '0.1.1'
+__version__ = '0.2'
 
 __all__ = ['install']
 
