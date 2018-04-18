@@ -86,7 +86,7 @@ distutils.core.setup(
     description='normalize ownership, permissions, order of directory entries and tar format in distutils-generated tarballs',
     long_description=__doc__.strip(),
     classifiers=classifiers,
-    url='https://github.com/jwilk/distutils644',
+    url='http://jwilk.net/software/distutils644',
     author='Jakub Wilk',
     author_email='jwilk@jwilk.net',
     py_modules=['distutils644'],
