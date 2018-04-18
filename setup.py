@@ -26,6 +26,7 @@ to normalize metadata in generated tarballs:
 
 - ownership (root:root),
 - permissions (0644 or 0755),
+- order of directory entries (sorted),
 - tar format (ustar).
 '''
 
