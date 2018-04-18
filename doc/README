@@ -1,7 +1,7 @@
 Overview
 ========
 
-**distutils644** monkey-patches distutils_
+**distutils644** monkey-patches Python distutils_
 to normalize metadata in generated tarballs:
 
 - ownership (root:root),
