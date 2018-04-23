@@ -37,6 +37,7 @@ To enable normalization opportunistically, add this to setup.py:
        distutils644.install()
 '''
 
+import contextlib
 import distutils.archive_util
 import os
 import sys
@@ -45,6 +46,20 @@ import types
 
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
     raise ImportError('Python 2.7 or 3.2+ is required')
+
+@contextlib.contextmanager
+def monkeypatch(mod, name, func):
+    orig_func = getattr(mod, name)
+    try:
+        setattr(mod, name, func)
+        yield
+    finally:
+        setattr(mod, name, orig_func)
+        func.original = None
+
+_orig_os_listdir = os.listdir
+def os_listdir(path):
+    return sorted(_orig_os_listdir(path))
 
 def install():
 
@@ -74,21 +89,15 @@ def install():
                 **kwargs
             )
 
-    _orig_os_listdir = os.listdir
-    def os_listdir(path):
-        return sorted(_orig_os_listdir(path))
-
     def make_tarball(*args, **kwargs):
-        orig_os_listdir = os.listdir
         orig_sys_modules = sys.modules.copy()
         tarfile_mod = types.ModuleType('tarfile644')
         tarfile_mod.open = TarFile644.open
         sys.modules['tarfile'] = tarfile_mod
-        os.listdir = os_listdir
         try:
-            return distutils.archive_util.make_tarball(*args, **kwargs)
+            with monkeypatch(os, 'listdir', os_listdir):
+                return distutils.archive_util.make_tarball(*args, **kwargs)
         finally:
-            os.listdir = orig_os_listdir
             sys.modules.clear()
             sys.modules.update(orig_sys_modules)
 
