@@ -1,8 +1,8 @@
-distutils644 (0.2.1) UNRELEASED; urgency=low
+distutils644 (0.3) UNRELEASED; urgency=low
 
   * 
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 18 Apr 2018 21:08:00 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 21 Apr 2018 19:53:13 +0200
 
 distutils644 (0.2) unstable; urgency=low
 
