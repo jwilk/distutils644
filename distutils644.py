@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 '''
-Monkey-patch distutils to normalize metadata in generated tarballs:
+Monkey-patch distutils to normalize metadata in generated archives:
 - ownership (root:root),
 - permissions (0644 or 0755),
 - order of directory entries (sorted),

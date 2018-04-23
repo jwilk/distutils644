@@ -22,7 +22,7 @@
 
 '''
 **distutils644** monkey-patches distutils
-to normalize metadata in generated tarballs:
+to normalize metadata in generated archives:
 
 - ownership (root:root),
 - permissions (0644 or 0755),
