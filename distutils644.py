@@ -45,7 +45,8 @@ import sys
 import tarfile
 import types
 
-if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
+_ = {0}  # Python >= 2.7 is required
+if (3, 0) <= sys.version_info < (3, 2):
     raise ImportError('Python 2.7 or 3.2+ is required')
 
 @contextlib.contextmanager
