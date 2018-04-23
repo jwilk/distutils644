@@ -61,33 +61,41 @@ _orig_os_listdir = os.listdir
 def os_listdir(path):
     return sorted(_orig_os_listdir(path))
 
-def install():
+class StatResult644(object):
 
-    def root_filter(tarinfo):
-        tarinfo.uid = tarinfo.gid = 0
-        tarinfo.uname = tarinfo.gname = 'root'
-        tarinfo.mode &= 0o700
-        tarinfo.mode |= 0o644
-        if tarinfo.mode & 0o100:
-            tarinfo.mode |= 0o111
-        return tarinfo
+    def __init__(self, original):
+        self._original = original
+
+    @property
+    def st_mode(self):
+        mode = self._original.st_mode
+        mode &= ~0o77
+        mode |= 0o644
+        if mode & 0o100:
+            mode |= 0o111
+        return mode
+
+    @property
+    def st_uid(self):
+        return 0
+
+    @property
+    def st_gid(self):
+        return 0
+
+    def __getattr__(self, attr):
+        return getattr(self._original, attr)
+
+_orig_os_lstat = os.lstat
+def os_lstat(path):
+    st = _orig_os_lstat(path)
+    return StatResult644(st)
+
+def install():
 
     class TarFile644(tarfile.TarFile):
 
         format = tarfile.USTAR_FORMAT
-
-        def add(self, name, arcname=None, recursive=True, exclude=None, filter=None):  # pylint: disable=arguments-differ,redefined-builtin
-            del filter
-            kwargs = {}
-            if exclude is not None:
-                kwargs.update(exclude=exclude)
-            return tarfile.TarFile.add(self,
-                name=name,
-                arcname=arcname,
-                recursive=recursive,
-                filter=root_filter,
-                **kwargs
-            )
 
     def make_tarball(*args, **kwargs):
         orig_sys_modules = sys.modules.copy()
@@ -95,7 +103,8 @@ def install():
         tarfile_mod.open = TarFile644.open
         sys.modules['tarfile'] = tarfile_mod
         try:
-            with monkeypatch(os, 'listdir', os_listdir):
+            with monkeypatch(os, 'listdir', os_listdir), \
+              monkeypatch(os, 'lstat', os_lstat):
                 return distutils.archive_util.make_tarball(*args, **kwargs)
         finally:
             sys.modules.clear()
