@@ -23,8 +23,8 @@ install:
 - ln -sf ~/shove/bin/shove ~/.local/bin
 - shove -V
 script:
-- python -m pydiatra *.py
-- python -m pyflakes *.py
+- python -m pydiatra .
+- python -m pyflakes .
 - $if_pylint private/run-pylint
 - $if_pygments private/check-rst
 - make test
