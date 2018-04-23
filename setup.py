@@ -37,6 +37,11 @@ import sys
 import distutils.core
 from distutils.command.sdist import sdist as distutils_sdist
 
+try:
+    from wheel.bdist_wheel import bdist_wheel
+except ImportError:
+    bdist_wheel = None
+
 import distutils644
 
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
@@ -93,6 +98,7 @@ distutils.core.setup(
     py_modules=['distutils644'],
     cmdclass=dict(
         sdist=cmd_sdist,
+        bdist_wheel=bdist_wheel,
     ),
 )
 

@@ -39,11 +39,17 @@ To enable normalization opportunistically, add this to setup.py:
 
 import contextlib
 import distutils.archive_util
+import functools
 import os
 import stat
 import sys
 import tarfile
 import types
+
+try:
+    import wheel.bdist_wheel
+except ImportError:
+    wheel = None
 
 _ = {0}  # Python >= 2.7 is required
 if (3, 0) <= sys.version_info < (3, 2):
@@ -112,6 +118,13 @@ def os_stat(path):
     st = _orig_os_stat(path)
     return StatResult644(st)
 
+if wheel is not None:
+    _orig_archive_wheelfile = wheel.bdist_wheel.archive_wheelfile
+    @functools.wraps(_orig_archive_wheelfile)
+    def archive_wheelfile(*args, **kwargs):
+        with monkeypatch(os, 'stat', os_stat):
+            return _orig_archive_wheelfile(*args, **kwargs)
+
 def install():
 
     class TarFile644(tarfile.TarFile):
@@ -150,6 +163,9 @@ def install():
         in archive_formats.items()
     )
     distutils.archive_util.ARCHIVE_FORMATS = archive_formats
+
+    if wheel is not None:
+        wheel.bdist_wheel.archive_wheelfile = archive_wheelfile
 
 __version__ = '0.3'
 
