@@ -40,6 +40,7 @@ To enable normalization opportunistically, add this to setup.py:
 import contextlib
 import distutils.archive_util
 import os
+import stat
 import sys
 import tarfile
 import types
@@ -60,6 +61,13 @@ def monkeypatch(mod, name, func):
 _orig_os_listdir = os.listdir
 def os_listdir(path):
     return sorted(_orig_os_listdir(path))
+
+_orig_os_walk = os.walk
+def os_walk(*args, **kwargs):
+    for dirpath, dirnames, filenames in _orig_os_walk(*args, **kwargs):
+        dirnames.sort()
+        filenames.sort()
+        yield dirpath, dirnames, filenames
 
 class StatResult644(object):
 
@@ -86,9 +94,21 @@ class StatResult644(object):
     def __getattr__(self, attr):
         return getattr(self._original, attr)
 
+    def __getitem__(self, n):
+        if n == stat.ST_MODE:
+            return self.st_mode
+        elif n in {stat.ST_UID, stat.ST_GID}:
+            return 0
+        return self._original[n]
+
 _orig_os_lstat = os.lstat
 def os_lstat(path):
     st = _orig_os_lstat(path)
+    return StatResult644(st)
+
+_orig_os_stat = os.stat
+def os_stat(path):
+    st = _orig_os_stat(path)
     return StatResult644(st)
 
 def install():
@@ -110,10 +130,18 @@ def install():
             sys.modules.clear()
             sys.modules.update(orig_sys_modules)
 
+    def make_zipfile(*args, **kwargs):
+        with monkeypatch(os, 'walk', os_walk), \
+          monkeypatch(os, 'stat', os_stat):
+            return distutils.archive_util.make_zipfile(*args, **kwargs)
+
     def patch_format(fmt):
-        if fmt[0] is distutils.archive_util.make_tarball:
-            return (make_tarball,) + fmt[1:]
-        return fmt
+        func = fmt[0]
+        if func is distutils.archive_util.make_tarball:
+            func = make_tarball
+        elif func is distutils.archive_util.make_zipfile:
+            func = make_zipfile
+        return (func,) + fmt[1:]
 
     archive_formats = distutils.archive_util.ARCHIVE_FORMATS
     archive_formats = dict(
