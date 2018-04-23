@@ -18,24 +18,16 @@ install:
 - pip install pyflakes
 - $if_pylint pip install pylint
 - $if_pygments pip install docutils pygments
+- git clone https://github.com/progrhyme/shove.git ~/shove
+- mkdir -p ~/.local/bin
+- ln -sf ~/shove/bin/shove ~/.local/bin
+- shove -V
 script:
 - python -m pydiatra *.py
 - python -m pyflakes *.py
 - $if_pylint private/run-pylint
 - $if_pygments private/check-rst
-- python setup.py sdist
-- tar -tvvf dist/distutils644-*.tar.gz | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '; }
-- tar -tf dist/distutils644-*.tar.gz | LC_ALL=C sort -c
-- zcat dist/distutils644-*.tar.gz | file - | grep -w 'POSIX tar archive'
-- rm -rf dist
-- python setup.py sdist --formats=zip
-- zipinfo --h-t dist/distutils644-*.zip | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) '; }
-- zipinfo -v dist/distutils644-*.zip | { ! grep -w 'Unix UID'; }
-- zipinfo -1 dist/distutils644-*.zip | grep -E '^[^/]+/[^/]+$' | LC_ALL=C sort -c
-- zipinfo -1 dist/distutils644-*.zip | grep -E '^[^/]+/[^/]+/[^/]+$' | LC_ALL=C sort -c
-- rm -rf dist
-- LC_ALL=C python setup.py --version > __version__
-- diff -u __version__ <(python -c 'import distutils644 as d; print(d.__version__)')
+- make test
 - python setup.py install
 - cd /
 - python -c 'import distutils644'
