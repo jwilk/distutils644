@@ -30,5 +30,9 @@ Prerequisites
 =============
 
 * Python 2.7 or ≥ 3.2
+* wheel_ ≥ 0.7 (for wheel support)
+
+.. _wheel:
+   https://pypi.org/project/wheel/
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et
