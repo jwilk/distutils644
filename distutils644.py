@@ -115,7 +115,6 @@ def os_stat(path):
 def install():
 
     class TarFile644(tarfile.TarFile):
-
         format = tarfile.USTAR_FORMAT
 
     def make_tarball(*args, **kwargs):
