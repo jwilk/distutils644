@@ -89,7 +89,7 @@ distutils.core.setup(
     name='distutils644',
     version=get_version(),
     license='MIT',
-    description='normalize ownership, permissions, order of directory entries and tar format in distutils-generated tarballs',
+    description='normalize ownership, permissions, order of directory entries and tar format in distutils-generated archives',
     long_description=__doc__.strip(),
     classifiers=classifiers,
     url='http://jwilk.net/software/distutils644',
