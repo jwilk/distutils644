@@ -1,8 +1,8 @@
 distutils644 (0.3.1) UNRELEASED; urgency=low
 
-  * 
+  * Fix “setup.py --help-commands” when the wheel module is missing.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 26 Apr 2018 15:28:52 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 26 Apr 2018 15:29:32 +0200
 
 distutils644 (0.3) unstable; urgency=low
 
