@@ -85,6 +85,13 @@ Programming Language :: Python :: 3.7
 Topic :: Software Development :: Build Tools
 '''.strip().splitlines()
 
+def d(**kwargs):
+    return {
+        k: v
+        for k, v in kwargs.items()
+        if v is not None
+    }
+
 distutils.core.setup(
     name='distutils644',
     version=get_version(),
@@ -96,7 +103,7 @@ distutils.core.setup(
     author='Jakub Wilk',
     author_email='jwilk@jwilk.net',
     py_modules=['distutils644'],
-    cmdclass=dict(
+    cmdclass=d(
         sdist=cmd_sdist,
         bdist_wheel=bdist_wheel,
     ),
