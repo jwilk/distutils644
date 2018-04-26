@@ -1,4 +1,4 @@
-distutils644 (0.3) UNRELEASED; urgency=low
+distutils644 (0.3) unstable; urgency=low
 
   * Normalize metadata in zip files, too.
   * Normalize metadata in wheels, too.
@@ -6,7 +6,7 @@ distutils644 (0.3) UNRELEASED; urgency=low
   * Add a test suite.
   * Upgrade the “Development Status” classifier to “Beta”.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 21 Apr 2018 19:53:13 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 26 Apr 2018 13:08:02 +0200
 
 distutils644 (0.2) unstable; urgency=low
 
