@@ -167,7 +167,7 @@ def install():
     if wheel is not None:
         wheel.bdist_wheel.archive_wheelfile = archive_wheelfile
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 __all__ = ['install']
 
