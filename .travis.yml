@@ -10,12 +10,14 @@ python:
 - "3.6"
 - "3.7-dev"
 before_install:
+- pyflakes=pyflakes
+- if [[ $TRAVIS_PYTHON_VERSION = 3.[23] ]]; then pyflakes='pyflakes<2'; fi
 - if [[ $TRAVIS_PYTHON_VERSION = 3.2 ]]; then if_pygments=:; fi
 - if [[ $TRAVIS_PYTHON_VERSION = 3.2 ]]; then if_pylint=:; fi
 - if [[ $TRAVIS_PYTHON_VERSION = *-dev ]]; then if_pylint=:; fi
 install:
 - pip install pydiatra
-- pip install pyflakes
+- pip install $pyflakes
 - $if_pylint pip install pylint
 - $if_pygments pip install docutils pygments
 - git clone https://github.com/progrhyme/shove.git ~/shove
