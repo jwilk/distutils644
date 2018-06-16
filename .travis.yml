@@ -25,6 +25,7 @@ install:
 - ln -sf ~/shove/bin/shove ~/.local/bin
 - shove -V
 script:
+- dpkg-parsechangelog -ldoc/changelog --all 2>&1 >/dev/null | { ! grep .; }
 - python -m pydiatra .
 - python -m pyflakes .
 - $if_pylint private/run-pylint
