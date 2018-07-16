@@ -8,6 +8,7 @@ disable =
     locally-disabled,
     missing-docstring,
     too-many-arguments,
+    useless-object-inheritance,
 
 [REPORTS]
 reports = no
