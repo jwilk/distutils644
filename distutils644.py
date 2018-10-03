@@ -121,11 +121,31 @@ def os_stat(path):
     return StatResult644(st)
 
 if wheel is not None:
-    _orig_archive_wheelfile = wheel.bdist_wheel.archive_wheelfile
-    @functools.wraps(_orig_archive_wheelfile)
-    def archive_wheelfile(*args, **kwargs):
-        with monkeypatch(os, 'stat', os_stat):
-            return _orig_archive_wheelfile(*args, **kwargs)
+    try:
+        _orig_archive_wheelfile = wheel.bdist_wheel.archive_wheelfile
+    except AttributeError:
+        archive_wheelfile = None
+    else:
+        @functools.wraps(_orig_archive_wheelfile)
+        def archive_wheelfile(*args, **kwargs):
+            with monkeypatch(os, 'stat', os_stat):
+                return _orig_archive_wheelfile(*args, **kwargs)
+    if archive_wheelfile is None:
+        def _fix_last_zipinfo(zipfile, mode=None):
+            zipinfo = zipfile.filelist[-1]
+            if mode is None:
+                mode = normalize_mode(zipinfo.external_attr >> 16)
+            zipinfo.external_attr = (zipinfo.external_attr & 0xFFFF) | (mode << 16)
+        _orig_WheelFile_write = wheel.wheelfile.WheelFile.write  # pylint: disable=no-member
+        @functools.wraps(_orig_WheelFile_write)
+        def WheelFile_write(self, *args, **kwargs):
+            _orig_WheelFile_write(self, *args, **kwargs)
+            _fix_last_zipinfo(self)
+        _orig_WheelFile_writestr = wheel.wheelfile.WheelFile.writestr  # pylint: disable=no-member
+        @functools.wraps(_orig_WheelFile_writestr)
+        def WheelFile_writestr(self, *args, **kwargs):
+            _orig_WheelFile_writestr(self, *args, **kwargs)
+            _fix_last_zipinfo(self, mode=0o100644)
 
 def install():
 
@@ -167,7 +187,11 @@ def install():
     distutils.archive_util.ARCHIVE_FORMATS = archive_formats
 
     if wheel is not None:
-        wheel.bdist_wheel.archive_wheelfile = archive_wheelfile
+        if archive_wheelfile is not None:
+            wheel.bdist_wheel.archive_wheelfile = archive_wheelfile
+        else:
+            wheel.wheelfile.WheelFile.write = WheelFile_write  # pylint: disable=no-member
+            wheel.wheelfile.WheelFile.writestr = WheelFile_writestr  # pylint: disable=no-member
 
 __version__ = '0.3.2'
 
