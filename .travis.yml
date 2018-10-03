@@ -24,6 +24,9 @@ before_install:
 install:
 - pip install pydiatra
 - pip install $pyflakes
+- if [[ $TRAVIS_PYTHON_VERSION = *-dev ]]; then
+    printf '\n\n    CONSTANT = ignore\n' >> $VIRTUAL_ENV/lib/python*/site-packages/pyflakes/checker.py;
+  fi
 - $if_pylint pip install pylint
 - $if_pygments pip install docutils pygments
 - git clone https://github.com/progrhyme/shove.git ~/shove
