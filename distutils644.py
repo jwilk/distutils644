@@ -76,6 +76,13 @@ def os_walk(*args, **kwargs):
         filenames.sort()
         yield dirpath, dirnames, filenames
 
+def normalize_mode(mode):
+    mode &= ~0o77
+    mode |= 0o644
+    if mode & 0o100:
+        mode |= 0o111
+    return mode
+
 class StatResult644(object):
 
     def __init__(self, original):
@@ -83,12 +90,7 @@ class StatResult644(object):
 
     @property
     def st_mode(self):
-        mode = self._original.st_mode
-        mode &= ~0o77
-        mode |= 0o644
-        if mode & 0o100:
-            mode |= 0o111
-        return mode
+        return normalize_mode(self._original.st_mode)
 
     @property
     def st_uid(self):
