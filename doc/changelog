@@ -1,8 +1,8 @@
-distutils644 (0.3.2) UNRELEASED; urgency=low
+distutils644 (0.3.2) unstable; urgency=low
 
   * Fix compatibility with wheel ≥ 0.32.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 03 Oct 2018 12:17:59 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 04 Oct 2018 22:11:28 +0200
 
 distutils644 (0.3.1) unstable; urgency=low
 
