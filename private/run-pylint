@@ -35,7 +35,7 @@ then
 fi
 log=$(mktemp -t pylint.XXXXXX)
 "$PYTHON" -m pylint "$@" > "$log" || [ $? != 1 ]
-! grep '^\w:' "$log" \
+! grep -P '^\S+:' "$log" \
 | grep -v ": redefined-builtin \\[.*\\] Redefining built-in 'file'" \
 | LC_ALL=C sort -k2 \
 | grep '.' || exit 1
