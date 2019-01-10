@@ -9,6 +9,10 @@ all install:
 test:
 	env SHOVE_WORK_DIR="$$PWD/.shove" shove -r t -v
 
+.PHONY: clean
+clean:
+	rm -rf .shove
+
 .error = GNU make is required
 
 # vim:ts=4 sts=4 sw=4 noet
