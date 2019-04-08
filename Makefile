@@ -7,11 +7,10 @@ all install:
 
 .PHONY: test
 test:
-	env SHOVE_WORK_DIR="$$PWD/.shove" shove -r t -v
+	prove -v
 
 .PHONY: clean
-clean:
-	rm -rf .shove
+clean: ;
 
 .error = GNU make is required
 
