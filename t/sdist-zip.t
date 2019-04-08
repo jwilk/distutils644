@@ -16,17 +16,17 @@ else
 fi
 tmpdir=$(mktemp -d -t distutils644.XXXXXX)
 { $python setup.py sdist --formats=zip -d "$tmpdir" > /dev/null; } 2>&1
-if zipinfo --h-t "$tmpdir"/distutils644-*.zip | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) '; }
+if zipinfo --h-t "$tmpdir"/distutils644-*.zip | grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) '
 then
-    echo ok 1 644/755 permissions
-else
     echo not ok 1 unexpected permissions
-fi
-if zipinfo -v "$tmpdir"/distutils644-*.zip | { ! grep -w 'Unix UID'; }
-then
-    echo ok 2 no UNIX UIDs
 else
+    echo ok 1 644/755 permissions
+fi
+if zipinfo -v "$tmpdir"/distutils644-*.zip | grep -w 'Unix UID'
+then
     echo not ok 2 unexpected UNIX UIDs
+else
+    echo ok 2 no UNIX UIDs
 fi
 if zipinfo -1 "$tmpdir"/distutils644-*.zip | grep -E '^[^/]+/[^/]+$' | LC_ALL=C sort -c
 then

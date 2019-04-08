@@ -10,11 +10,11 @@ python=${PYTHON:-python}
 ls distutils644.py > /dev/null || exit 1
 tmpdir=$(mktemp -d -t distutils644.XXXXXX)
 { $python setup.py sdist -d "$tmpdir" > /dev/null; } 2>&1
-if tar -tvvf "$tmpdir"/distutils644-*.tar.gz | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '; }
+if tar -tvvf "$tmpdir"/distutils644-*.tar.gz | grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) root/root '
 then
-    echo ok 1 644/755 permissions
-else
     echo not ok 1 unexpected permissions
+else
+    echo ok 1 644/755 permissions
 fi
 if tar -tf "$tmpdir"/distutils644-*.tar.gz | LC_ALL=C sort -c
 then
