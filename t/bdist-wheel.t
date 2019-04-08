@@ -7,8 +7,6 @@ set -e -u
 
 python=${PYTHON:-python}
 ls distutils644.py > /dev/null || exit 1
-tmpdir=$(mktemp -d -t distutils644.XXXXXX)
-{ $python setup.py bdist_wheel -d "$tmpdir" > /dev/null; } 2>&1
 if command -v zipinfo > /dev/null
 then
     echo 1..2
@@ -16,6 +14,8 @@ else
     echo 1..0 SKIP 'zipinfo(1) not found'
     exit
 fi
+tmpdir=$(mktemp -d -t distutils644.XXXXXX)
+{ $python setup.py bdist_wheel -d "$tmpdir" > /dev/null; } 2>&1
 if zipinfo --h-t "$tmpdir"/distutils644-*.whl | { ! grep -v -E '^(drwxr-xr-x|-rw-r--r--|-rwxr-xr-x) '; }
 then
     echo ok 1 644/755 permissions
