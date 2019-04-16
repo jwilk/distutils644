@@ -11,7 +11,7 @@ if command -v zipinfo > /dev/null
 then
     echo 1..4
 else
-    echo 1..0 SKIP 'zipinfo(1) not found'
+    echo 1..0 '# skip zipinfo(1) not found'
     exit
 fi
 tmpdir=$(mktemp -d -t distutils644.XXXXXX)
