@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 set -e -u
-PYTHON=${PYTHON:-python3}
+PYTHON=${PYTHON:-python}
 "$PYTHON" -m pylint --version >/dev/null || exit 1
 if [ $# -eq 0 ]
 then
