@@ -102,7 +102,7 @@ distutils.core.setup(
     ),
     long_description=__doc__.strip(),
     classifiers=classifiers,
-    url='http://jwilk.net/software/distutils644',
+    url='https://jwilk.net/software/distutils644',
     author='Jakub Wilk',
     author_email='jwilk@jwilk.net',
     py_modules=['distutils644'],
