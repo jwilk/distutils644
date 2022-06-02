@@ -179,11 +179,11 @@ def install():
         return (func,) + fmt[1:]
 
     archive_formats = distutils.archive_util.ARCHIVE_FORMATS
-    archive_formats = dict(
-        (key, patch_format(value))
+    archive_formats = {
+        key: patch_format(value)
         for key, value
         in archive_formats.items()
-    )
+    }
     distutils.archive_util.ARCHIVE_FORMATS = archive_formats
 
     if wheel is not None:
