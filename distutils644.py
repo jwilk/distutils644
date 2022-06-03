@@ -38,7 +38,7 @@ To enable normalization opportunistically, add this to setup.py:
 '''
 
 import contextlib
-import distutils.archive_util
+import distutils.archive_util  # pylint: disable=deprecated-module
 import functools
 import os
 import stat

@@ -34,8 +34,10 @@ import io
 import os
 import sys
 
+# pylint: disable=deprecated-module
 import distutils.core
 from distutils.command.sdist import sdist as distutils_sdist
+# pylint: enable=deprecated-module
 
 try:
     from wheel.bdist_wheel import bdist_wheel
