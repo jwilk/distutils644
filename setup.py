@@ -49,7 +49,7 @@ except ImportError:
 if not use_setuptools:
     del sys.modules['setuptools']
 
-import distutils644
+import distutils644  # pylint: disable=wrong-import-position
 
 if sys.version_info < (2, 7) or ((3, 0) <= sys.version_info < (3, 2)):
     raise RuntimeError('Python 2.7 or 3.2+ is required')
