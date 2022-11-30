@@ -46,9 +46,9 @@ import sys
 import tarfile
 import types
 
-try:
+if 'wheel.bdist_wheel' in sys.modules:
     import wheel.bdist_wheel
-except ImportError:
+else:
     wheel = None
 
 _ = {0}  # Python >= 2.7 is required
