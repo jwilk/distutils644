@@ -12,6 +12,13 @@ disable =
     too-many-arguments,
     useless-object-inheritance,
 
+[TYPECHECK]
+# FIXME: Pylint doesn't grok setuptools' distutils.
+ignored-modules =
+    distutils.archive_util,
+    distutils.command.sdist,
+    distutils.core
+
 [REPORTS]
 reports = no
 score = no
