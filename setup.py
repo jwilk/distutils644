@@ -39,10 +39,15 @@ import distutils.core
 from distutils.command.sdist import sdist as distutils_sdist
 # pylint: enable=deprecated-module
 
+use_setuptools = 'setuptools' in sys.modules
+if not use_setuptools:
+    sys.modules['setuptools'] = None
 try:
     from wheel.bdist_wheel import bdist_wheel
 except ImportError:
     bdist_wheel = None
+if not use_setuptools:
+    del sys.modules['setuptools']
 
 import distutils644
 
