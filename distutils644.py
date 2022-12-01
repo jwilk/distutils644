@@ -193,7 +193,7 @@ def install():
             wheel.wheelfile.WheelFile.write = WheelFile_write  # pylint: disable=no-member
             wheel.wheelfile.WheelFile.writestr = WheelFile_writestr  # pylint: disable=no-member
 
-__version__ = '0.3.3'
+__version__ = '0.4'
 
 __all__ = ['install']
 

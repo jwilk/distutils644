@@ -1,4 +1,4 @@
-distutils644 (0.3.3) UNRELEASED; urgency=low
+distutils644 (0.4) UNRELEASED; urgency=low
 
   * Patch wheel only if it was already imported.
   * At build time, don't let wheel import setuptools, unless it's already
