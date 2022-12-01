@@ -1,8 +1,10 @@
 distutils644 (0.3.3) UNRELEASED; urgency=low
 
-  * 
+  * Patch wheel only if it was already imported.
+  * At build time, don't let wheel import setuptools, unless it's already
+    imported (e.g. by pip).
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 05 Oct 2018 23:27:15 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 01 Dec 2022 08:48:24 +0100
 
 distutils644 (0.3.2) unstable; urgency=low
 
