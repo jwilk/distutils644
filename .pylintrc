@@ -17,7 +17,7 @@ disable =
 ignored-modules =
     distutils.archive_util,
     distutils.command.sdist,
-    distutils.core
+    distutils.core,
 
 [REPORTS]
 reports = no
