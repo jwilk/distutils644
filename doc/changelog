@@ -1,4 +1,4 @@
-distutils644 (0.4) UNRELEASED; urgency=low
+distutils644 (0.4) unstable; urgency=low
 
   * Patch wheel only if it was already imported.
   * Improve the setup script:
@@ -8,7 +8,7 @@ distutils644 (0.4) UNRELEASED; urgency=low
   * Add (no-op) clean target to Makefile.
   * Improve the test suite.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 13 Dec 2022 18:00:55 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 16 Dec 2022 18:16:09 +0100
 
 distutils644 (0.3.2) unstable; urgency=low
 
