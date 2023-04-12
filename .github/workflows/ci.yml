@@ -55,6 +55,9 @@ jobs:
       run: |
         python -m pip install pylint
         private/run-pylint
+      continue-on-error:
+        ${{ endsWith(matrix.python, '-dev') }}
+        # FIXME: astroid.exceptions.InferenceError: StopIteration raised without any error information.
     - name: check docs
       run: |
         dpkg-parsechangelog -ldoc/changelog --all 2>&1 >/dev/null | { ! grep .; }
