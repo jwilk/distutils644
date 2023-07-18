@@ -38,7 +38,7 @@ jobs:
       with:
         python-version: ${{matrix.python}}
     - name: set up pip
-      if: ${{ ! startsWith(matrix.python, '2.') }}
+      if: env.pythonLocation
       run: |
         sed -i -e 's/ sys.exit(.*)/ raise/' ${{env.pythonLocation}}/lib/python*/site-packages/pip/_internal/utils/setuptools_build.py
         python -m pip list
