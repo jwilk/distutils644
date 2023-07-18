@@ -43,6 +43,7 @@ jobs:
         sed -i -e 's/ sys.exit(.*)/ raise/' ${{env.pythonLocation}}/lib/python*/site-packages/pip/_internal/utils/setuptools_build.py
         python -m pip list
     - name: install setuptools (if distutils is missing)
+      if: env.pythonLocation
       run: |
         if ! [ -d ${{env.pythonLocation}}/lib/python*/distutils/ ]; then
           python -m pip install setuptools
