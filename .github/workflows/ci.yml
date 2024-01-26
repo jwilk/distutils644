@@ -28,7 +28,7 @@ jobs:
           wheel: '>= 0.38'
     runs-on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: set up Python ${{matrix.python}}
       if: matrix.python != '2.7'
       uses: actions/setup-python@v4
