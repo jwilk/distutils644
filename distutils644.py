@@ -112,13 +112,13 @@ class StatResult644(object):
         return self._original[n]
 
 _orig_os_lstat = os.lstat
-def os_lstat(path):
-    st = _orig_os_lstat(path)
+def os_lstat(path, **kwargs):
+    st = _orig_os_lstat(path, **kwargs)
     return StatResult644(st)
 
 _orig_os_stat = os.stat
-def os_stat(path):
-    st = _orig_os_stat(path)
+def os_stat(path, **kwargs):
+    st = _orig_os_stat(path, **kwargs)
     return StatResult644(st)
 
 if wheel is not None:
