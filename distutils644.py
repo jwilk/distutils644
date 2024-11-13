@@ -47,6 +47,7 @@ import tarfile
 import types
 
 if 'wheel.bdist_wheel' in sys.modules:
+    import wheel
     import wheel.bdist_wheel
 else:
     wheel = None
