@@ -4,13 +4,13 @@ load-plugins = pylint.extensions.check_elif
 [MESSAGES CONTROL]
 disable =
     bad-continuation,
-    bad-option-value,
     invalid-name,
     locally-disabled,
     missing-docstring,
     no-else-return,
     too-many-arguments,
     useless-object-inheritance,
+    useless-option-value,
 
 [TYPECHECK]
 # FIXME: Pylint doesn't grok setuptools' distutils.
